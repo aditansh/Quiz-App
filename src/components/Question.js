@@ -34,8 +34,10 @@ function Question(props) {
     if (isText) {
       const ans = answer.current.value;
       props.nextQuestion(ans === props.Quiz.answer);
+      e.target.reset();
     } else if (isSingle) {
       props.nextQuestion(selectedAns === props.Quiz.answer);
+      e.target.reset();
     } else if (isMultiple) {
       checked.sort();
       const ans = props.Quiz.answer;
@@ -52,6 +54,7 @@ function Question(props) {
         return res;
       }
       props.nextQuestion(eql(ans, checked));
+      e.target.reset();
     }
   };
 

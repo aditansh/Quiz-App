@@ -12,6 +12,7 @@ function App() {
   let [step, setStep] = useState(0);
   let [start, setStart] = useState(false);
   let [username, setUsername] = useState("");
+  let length = Quiz.length;
 
   const startQuiz = (username) => {
     setStart(true);
@@ -23,7 +24,7 @@ function App() {
       setPoints(++points);
     }
 
-    if (step < 3) {
+    if (step < length) {
       setStep(++step);
     }
   };
@@ -35,7 +36,7 @@ function App() {
     setUsername("");
   }
 
-  if (step == 3) {
+  if (step == length) {
     return (
       <>
         <Navbar />
