@@ -1,18 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Welcome from "./components/Welcome";
 import Question from "./components/Question";
 import Scorecard from "./components/Scorecard";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Quiz } from "./components/Quiz";
 import { createRoot } from "react-dom/client";
+import axios from "axios";
 
 function App() {
+  const [questions, setQuestions] = useState([]);
+
+  const fetch = async () => {
+    var config = {
+      method: "get",
+      url: "//localhost:8000",
+      headers: {},
+    };
+
+    axios(config)
+      .then(function (response) {
+        setQuestions(response.data);
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  
+  useEffect(()=>{
+    fetch();
+},[]);
+
   let [points, setPoints] = useState(0);
   let [step, setStep] = useState(0);
   let [start, setStart] = useState(false);
   let [username, setUsername] = useState("");
-  let length = Quiz.length;
+  let length = questions.length;
 
   const startQuiz = (username) => {
     setStart(true);
@@ -24,7 +47,7 @@ function App() {
       setPoints(++points);
     }
 
-    if (step < length) {
+    if (step < questions.length) {
       setStep(++step);
     }
   };
@@ -34,9 +57,9 @@ function App() {
     setStep(0);
     setStart(false);
     setUsername("");
-  }
+  };
 
-  if (step == length) {
+  if (step == questions.length) {
     return (
       <>
         <Navbar />
@@ -51,7 +74,7 @@ function App() {
         <>
           <Navbar />
           <h1>{step}</h1>
-          <Question Quiz={Quiz[step]} nextQuestion={nextQuestion} />
+          <Question key="{step}" Quiz={questions[step]} nextQuestion={nextQuestion} />
         </>
       ) : (
         <>

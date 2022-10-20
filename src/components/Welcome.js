@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import axios from "axios";
+import React, { useEffect, useRef } from "react";
 
 function Welcome(props) {
   const inputref = useRef(null);
@@ -7,6 +8,15 @@ function Welcome(props) {
     e.preventDefault();
     props.startQuiz(inputref.current.value);
   };
+
+  // let name="";
+  // useEffect(() => {
+  //   const getName = async() => {
+  //     const res = await fetch("localhost:8000");
+  //     name = await res.json();
+  //     console.log(name);
+  //   }
+  // });
 
   return (
     <>
